@@ -159,7 +159,7 @@
             padding: 3px;
         }
 
-        /* Sub-wallet Bar (like TD777) */
+        /* Sub-wallet Bar */
         .sub-bar {
             background: #111625;
             padding: 7px 12px;
@@ -280,7 +280,7 @@
             background: var(--gold-grad); color: #000; border-color: var(--gold); font-weight: 800;
         }
 
-        /* Game Grid (TD777 3-col realistic style) */
+        /* Game Grid */
         .game-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -443,7 +443,7 @@
             padding: 5px 11px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;
         }
 
-        /* Deposit View (Screenshot 1 features) */
+        /* Deposit View */
         .dep-tabs {
             display: flex;
             gap: 14px;
@@ -570,7 +570,7 @@
             padding: 2px 7px; border-radius: 6px; font-weight: 800; font-size: 10px;
         }
 
-        /* Profile View (Screenshot 2 features) */
+        /* Profile View */
         .prof-hero {
             background: linear-gradient(135deg, #1b2238 0%, #2b164d 100%);
             padding: 16px 14px;
@@ -812,7 +812,7 @@
             z-index: 300; display: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.6);
         }
 
-        /* 5-Tab Bottom Nav (Screenshot 3) */
+        /* 5-Tab Bottom Nav */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; max-width: 480px;
             background: #121726; display: flex; justify-content: space-around;
@@ -916,7 +916,7 @@
             <div class="cat-tab" onclick="selectCategory('fav', this)">⭐ Favorites</div>
         </div>
 
-        <!-- 3-Column Game Grid (Matching Screenshot 3) -->
+        <!-- 3-Column Game Grid -->
         <div class="game-grid" id="gameGrid">
             <div class="game-card playable" data-cat="crash" data-name="aviator spribe" onclick="openPlayableGame('aviatorView')">
                 <div class="game-thumb" style="background: linear-gradient(135deg, #991b1b, #1e1b4b);">
@@ -1058,7 +1058,7 @@
         </div>
     </div>
 
-    <!-- ==================== DEPOSIT VIEW (Screenshot 1) ==================== -->
+    <!-- ==================== DEPOSIT VIEW ==================== -->
     <div id="depositView" class="page-view">
         <div class="sub-header">
             <div class="sub-header-left">
@@ -1073,7 +1073,7 @@
 
         <div style="padding:10px 14px; background:#111625; font-size:13px; display:flex; align-items:center; gap:8px;">
             <span>Balance</span>
-            <strong style="color:var(--gold);" id="depBalMirror">5,000.00</strong>
+            <strong style="color:var(--gold);" id="depBalMirror">5,000.00 PKR</strong>
             <span style="cursor:pointer;" onclick="refreshBalance(this)">🔄</span>
         </div>
 
@@ -1128,7 +1128,7 @@
         </div>
     </div>
 
-    <!-- ==================== PROFILE VIEW (Screenshot 2) ==================== -->
+    <!-- ==================== PROFILE VIEW ==================== -->
     <div id="profileView" class="page-view">
         <div class="prof-hero">
             <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
@@ -1142,7 +1142,7 @@
                 <div class="prof-avatar">👑</div>
                 <div class="prof-meta">
                     <h4>mirbhutto12 <span style="font-size:11px; color:var(--gold);">(SONU KING)</span></h4>
-                    <p>ID: <strong id="profileId">492143617</strong> <button class="copy-id-btn" onclick="copyText('492143617', 'User ID copied!')">Copy</button> | <strong style="color:var(--gold);" id="profBalMirror">5,000.00</strong></p>
+                    <p>ID: <strong id="profileId">492143617</strong> <button class="copy-id-btn" onclick="copyText(userId, 'User ID copied!')">Copy</button> | <strong style="color:var(--gold);" id="profBalMirror">5,000.00 PKR</strong></p>
                 </div>
             </div>
             <div class="prof-quick-actions">
@@ -1480,14 +1480,11 @@
 
 <script>
     const params = new URLSearchParams(window.location.search);
-    const userId = params.get('id') |
-
-| '492143617';
-    const currency = params.get('currency') |
-
-| 'PKR';
+    const userId = params.get('id') || '492143617';
+    const currency = params.get('currency') || 'PKR';
     document.querySelectorAll('.curr-label').forEach(el => el.innerText = currency);
     document.getElementById('profileId').innerText = userId;
+    document.getElementById('refLinkText').innerText = `https://mirbhutto12.github.io/testing-repo/?id=${userId}&currency=${currency}`;
 
     let balance = 5000;
     let points = 120;
@@ -1542,9 +1539,7 @@
     }
 
     function refreshBalance(el) {
-        const icon = el.querySelector('.refresh-icon') |
-
-| el;
+        const icon = el.querySelector('.refresh-icon') || el;
         icon.classList.add('spin-once');
         setTimeout(() => icon.classList.remove('spin-once'), 500);
         syncUI();
@@ -1597,9 +1592,7 @@
         const q = document.getElementById('searchBox').value.trim().toLowerCase();
         document.querySelectorAll('.game-card').forEach(card => {
             const isFav = card.querySelector('.fav-star').classList.contains('active');
-            const catMatch = activeCat === 'all' |
-
-| (activeCat === 'fav' ? isFav : card.dataset.cat === activeCat);
+            const catMatch = activeCat === 'all' || (activeCat === 'fav' ? isFav : card.dataset.cat === activeCat);
             const nameMatch = card.dataset.name.includes(q);
             card.style.display = (catMatch && nameMatch) ? 'block' : 'none';
         });
@@ -1644,9 +1637,7 @@
         btn.classList.add('active');
     }
     function submitDemoDeposit() {
-        const amt = Math.max(100, parseInt(document.getElementById('depAmountInput').value |
-
-| 0));
+        const amt = Math.max(100, parseInt(document.getElementById('depAmountInput').value || 0));
         const totalAdd = amt + selectedDepBonus;
         balance += totalAdd;
         syncUI();
@@ -1802,7 +1793,6 @@
 
     function finishGarudaSpin(baseBet, cells) {
         const grid = Array.from({length: 9}, () => garudaSyms[Math.floor(Math.random() * garudaSyms.length)]);
-        // Boost match chance slightly for fun client demo
         if (Math.random() < 0.48) {
             const sym = garudaSyms[Math.floor(Math.random() * 5)];
             grid[3] = sym; grid[4] = sym; grid[5] = sym;
@@ -1884,9 +1874,7 @@
         if (chStep === 6) cashChicken();
     }
     function cashChicken() {
-        if (!chActive |
-
-| chStep === 0) return showToast('Take at least 1 step first!');
+        if (!chActive || chStep === 0) return showToast('Take at least 1 step first!');
         chActive = false;
         const winVal = Math.round(gameBets.chicken * chMults[chStep - 1]);
         creditWin(winVal, 'Chicken Road 2.0');
@@ -1977,9 +1965,7 @@
         document.getElementById('minesCashBtn').style.display = 'block';
     }
     function clickMineTile(idx, tile) {
-        if (!minesActive |
-
-| tile.classList.contains('safe')) return;
+        if (!minesActive || tile.classList.contains('safe')) return;
         if (mineBombs.includes(idx)) {
             tile.classList.add('boom'); tile.innerText = '💣'; minesActive = false;
             showToast('💥 Boom! Mine hit.');
