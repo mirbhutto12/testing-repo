@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONU KING - Official Gaming Portal (Demo)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #ffffff;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            border-left: 1px solid #222;
+            border-right: 1px solid #222;
+            padding-bottom: 70px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #1a1f2c, #2a1b3d);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f5b041;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .wallet-box {
+            background: #161b22;
+            border: 1px solid #f5b041;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-deposit {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* Banner */
+        .banner {
+            margin: 12px;
+            height: 140px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .banner h2 {
+            font-size: 24px;
+            color: #ffd700;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        .banner p {
+            font-size: 13px;
+            margin-top: 5px;
+            color: #e0e0e0;
+        }
+
+        /* Marquee */
+        .marquee {
+            background: #161b22;
+            padding: 8px 12px;
+            margin: 0 12px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #f5b041;
+            border: 1px solid #30363d;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 10px;
+            padding: 0 12px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+
+        .cat-tab {
+            background: #21262d;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            border: 1px solid transparent;
+        }
+
+        .cat-tab.active {
+            background: linear-gradient(45deg, #f5b041, #e67e22);
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Game Grid */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 12px;
+        }
+
+        .game-card {
+            background: #161b22;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .game-card:active {
+            transform: scale(0.95);
+        }
+
+        .game-thumb {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .game-title {
+            padding: 8px 4px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #21262d;
+        }
+
+        /* Demo Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: #161b22;
+            padding: 25px;
+            border-radius: 12px;
+            width: 85%;
+            max-width: 350px;
+            text-align: center;
+            border: 1px solid #f5b041;
+        }
+
+        .modal-content h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .btn-close {
+            background: #f5b041;
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            background: #161b22;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #30363d;
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 11px;
+            color: #8b949e;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">👑 SONU KING</div>
+        <div class="wallet-box">
+            <span>PKR <span id="balance">5,000.00</span></span>
+            <button class="btn-deposit" onclick="addDemoFunds()">+ Demo</button>
+        </div>
+    </div>
+
+    <!-- Banner -->
+    <div class="banner">
+        <h2>WELCOME TO SONU KING</h2>
+        <p>VIP Gaming Platform • Instant PKR Demo Mode</p>
+    </div>
+
+    <!-- Announcement -->
+    <div class="marquee">
+        <marquee>🔥 Welcome to SONU KING Official Demo! User ID: 492143617 • Currency: PKR • Enjoy UI Preview!</marquee>
+    </div>
+
+    <!-- Categories -->
+    <div class="categories">
+        <div class="cat-tab active">🔥 Hot Games</div>
+        <div class="cat-tab">🎰 Slots</div>
+        <div class="cat-tab">✈️ Crash</div>
+        <div class="cat-tab">🃏 Cards</div>
+    </div>
+
+    <!-- Game Grid -->
+    <div class="game-grid">
+        <div class="game-card" onclick="openGame('Aviator Crash')">
+            <div class="game-thumb" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">✈️</div>
+            <div class="game-title">Aviator</div>
+        </div>
+        <div class="game-card" onclick="openGame('Fortune Gems')">
+            <div class="game-thumb" style="background: linear-gradient(135deg, #f7971e, #ffd200);">💎</div>
+            <div class="game-title">Fortune Gems</div>
+        </div>
+        <div class="game-card" onclick="openGame('Dragon Tiger')">
+            <div class="game-thumb" style="background: linear-gradient(135deg, #11998e, #38ef7d);">🐉</div>
+            <div class="game-title">Dragon Tiger</div>
+        </div>
+        <div class="game-card" onclick="openGame('Mines Pro')">
+            <div class="game-thumb" style="background: linear-gradient(135deg, #396afc, #2948ff);">💣</div>
+            <div class="game-title">Mines</div>
+        </div>
+        <div class="game-card" onclick="openGame('Teen Patti')">
+            <div class="game-thumb" style="background: linear-gradient(135deg, #8e2de2, #4a00e0);">🃏</div>
+            <div class="game-title">Teen Patti</div>
+        </div>
+        <div class="game-card" onclick="openGame('Roulette VIP')">
+            <div class="game-thumb" style="background: linear-gradient(135deg, #c31432, #240b36);">🎡</div>
+            <div class="game-title">Roulette</div>
+        </div>
+    </div>
+
+    <!-- Modal for Demo Preview -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Game Preview</h3>
+            <p>Yeh <strong>SONU KING</strong> ka UI Demo mode hai. Real gameplay aur backend API integration final deployment mein add ki jayegi.</p>
+            <button class="btn-close" onclick="closeModal()">Theek Hai</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active">🏠 Home</div>
+        <div class="nav-item" onclick="openGame('Promotions')">🎁 Promo</div>
+        <div class="nav-item" onclick="openGame('Refer & Earn')">👥 Invite</div>
+        <div class="nav-item" onclick="openGame('Profile ID: 492143617')">👤 Account</div>
+    </div>
+
+    <script>
+        let currentBalance = 5000;
+
+        function addDemoFunds() {
+            currentBalance += 1000;
+            document.getElementById('balance').innerText = currentBalance.toLocaleString('en-US', {minimumFractionDigits: 2});
+        }
+
+        function openGame(gameName) {
+            document.getElementById('modalTitle').innerText = gameName + " (Demo)";
+            document.getElementById('gameModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('gameModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
